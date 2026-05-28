@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daltonuur Aanmelding</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+  /* ── Reset ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  /* ── Design tokens — 8-px grid, WCAG AA contrast ── */
+  :root {
+    --bg:          #F4F1EB;
+    --surface:     #FFFFFF;
+    --surface-2:   #FAF8F4;          /* step-2,3 slight offset */
+    --border:      #DDD9D1;
+    --border-str:  #B8B2A8;          /* stronger border for focus rings */
+    --text:        #17150F;
+    --text-sub:    #5C574F;          /* AA on white: 5.7:1 */
+    --text-muted:  #8A8278;
+
+    /* Green — primary accent */
+    --green:       #1F4A1A;
+    --green-mid:   #376B30;
+    --green-light: #D6EDD3;
+    --green-text:  #1A3D16;          /* AA on --green-light: 7:1 */
+
+    /* Amber — toets priority (shape + hue + luminance distinct from green) */
+    --amber:       #92400E;
+    --amber-light: #FEF3C7;
+    --amber-border:#D97706;
+    --amber-text:  #78350F;          /* AA on --amber-light: 7.2:1 */
+
+    /* Blue — voorkeur */
+    --blue:        #1E3A8A;
+    --blue-light:  #DBEAFE;
+    --blue-border: #3B82F6;
+    --blue-text:   #1E3A8A;          /* AA on --blue-light: 7.4:1 */
+
+    /* Neutral */
+    --neutral-light:#EDEAE4;
+    --neutral-text: #4B4740;
+
+    --r-card:  12px;
+    --r-sm:     8px;
+    --r-pill: 999px;
+
+    --shadow-sm: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+    --shadow-md: 0 4px 12px rgba(0,0,0,.08), 0 2px 4px rgba(0,0,0,.05);
+  }
+
+  /* ── Base ── */
+  body {
+    background: var(--bg);
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text);
+    min-height: 100vh;
+    padding: 56px 20px 120px;
+    /* reduce motion: respect user pref */
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  }
+
+  .page-wrapper { max-width: 680px; margin: 0 auto; }
+
+  /* ── Header ── */
+  header {
+    margin-bottom: 56px;
+    animation: fadeUp .5s cubic-bezier(.16,1,.3,1) both;
+  }
+
+  .school-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+  }
+
+  header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(28px, 6vw, 44px);
+    font-weight: 400;
+    line-height: 1.12;
+    letter-spacing: -.01em;
+  }
+
+  header h1 em { font-style: italic; color: var(--green-mid); }
+
+  header p {
+    margin-top: 16px;
+    font-size: 15px;
+    color: var(--text-sub);
+    line-height: 1.7;
+    max-width: 480px;
+  }
+
+  /* ── Step cards — visual hierarchy fix ── */
+  /*
+    Card 1 = primary (full white, shadow, prominent border)
+    Card 2 = secondary (slight tint, no shadow)
+    Card 3 = tertiary (more tint, dashed border)
+  */
+  .card {
+    border-radius: var(--r-card);
+    padding: 32px;
+    margin-bottom: 16px;
+    animation: fadeUp .5s cubic-bezier(.16,1,.3,1) both;
+  }
+
+  .card-1 {
+    background: var(--surface);
+    border: 1.5px solid var(--border-str);
+    box-shadow: var(--shadow-md);
+    animation-delay: .07s;
+  }
+
+  .card-2 {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    animation-delay: .14s;
+  }
+
+  .card-3 {
+    background: var(--surface-2);
+    border: 1px dashed var(--border-str);
+    animation-delay: .21s;
+  }
+
+  .card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+
+  .step-num {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px; height: 28px;
+    background: var(--green);
+    color: #fff;
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: 600;
+    margin-top: 2px;
+  }
+
+  .card-2 .step-num, .card-3 .step-num {
+    background: transparent;
+    border: 1.5px solid var(--border-str);
+    color: var(--text-sub);
+  }
+
+  .card-titles h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.3;
+    margin-bottom: 3px;
+  }
+
+  .card-titles .hint {
+    font-size: 13px;
+    color: var(--text-sub);
+  }
+
+  /* ── Empty state indicator on cards ── */
+  .pill-wrap { position: relative; }
+
+  .empty-hint {
+    display: none;
+    font-size: 12px;
+    color: var(--text-muted);
+    font-style: italic;
+    margin-top: 10px;
+  }
+
+  .pill-wrap.show-empty .empty-hint { display: block; }
+
+  /* ── Pills ── */
+  .pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .pill {
+    background: var(--neutral-light);
+    border: 1.5px solid var(--border);
+    border-radius: var(--r-pill);
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    cursor: pointer;
+    transition: background .12s, border-color .12s, color .12s, box-shadow .12s;
+    font-family: 'DM Sans', sans-serif;
+    user-select: none;
+    /* Accessibility */
+    outline: none;
+  }
+
+  .pill:hover {
+    border-color: var(--green-mid);
+    background: var(--green-light);
+    color: var(--green-text);
+  }
+
+  /* Focus ring — visible for keyboard users */
+  .pill:focus-visible {
+    outline: 3px solid var(--green-mid);
+    outline-offset: 2px;
+  }
+
+  /* Selected: white text on dark green — contrast 8:1 */
+  .pill.selected {
+    background: var(--green);
+    border-color: var(--green);
+    color: #FFFFFF;
+    box-shadow: 0 1px 4px rgba(31,74,26,.25);
+  }
+
+  .pill.selected:focus-visible {
+    outline-color: var(--green-mid);
+  }
+
+  /* ── Actions ── */
+  .actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+    animation: fadeUp .5s cubic-bezier(.16,1,.3,1) .28s both;
+  }
+
+  .btn-primary {
+    flex: 1;
+    background: var(--green);
+    color: #fff;
+    border: none;
+    border-radius: var(--r-sm);
+    padding: 15px 24px;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    transition: background .15s, transform .1s, box-shadow .15s;
+    box-shadow: 0 2px 8px rgba(31,74,26,.3);
+    outline: none;
+  }
+
+  .btn-primary:hover { background: var(--green-mid); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(31,74,26,.3); }
+  .btn-primary:active { transform: translateY(0); box-shadow: none; }
+  .btn-primary:focus-visible { outline: 3px solid var(--green-mid); outline-offset: 3px; }
+
+  .btn-reset {
+    background: transparent;
+    color: var(--text-muted);
+    border: 1.5px solid var(--border);
+    border-radius: var(--r-sm);
+    padding: 15px 20px;
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    transition: all .15s;
+    outline: none;
+  }
+
+  .btn-reset:hover { border-color: #b91c1c; color: #b91c1c; }
+  .btn-reset:focus-visible { outline: 3px solid var(--border-str); outline-offset: 3px; }
+
+  /* ── Result ── */
+  #result {
+    display: none;
+    margin-top: 32px;
+  }
+
+  .result-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-card);
+    padding: 28px 32px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow-sm);
+    animation: fadeUp .4s cubic-bezier(.16,1,.3,1) both;
+  }
+
+  .result-card h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 19px;
+    font-weight: 400;
+    margin-bottom: 20px;
+    color: var(--text);
+  }
+
+  .result-group { margin-bottom: 16px; }
+  .result-group:last-child { margin-bottom: 0; }
+
+  .result-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .12em;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+
+  .result-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+
+  .result-tag {
+    border-radius: var(--r-pill);
+    padding: 4px 12px;
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .result-tag.hw  { background: var(--green-light);  color: var(--green-text);  border: 1px solid #A7D4A3; }
+  .result-tag.tts { background: var(--amber-light);  color: var(--amber-text);  border: 1px solid var(--amber-border); }
+  .result-tag.vk  { background: var(--blue-light);   color: var(--blue-text);   border: 1px solid var(--blue-border); }
+  .result-tag.none { background: var(--neutral-light); color: var(--text-muted); border: 1px solid var(--border); font-style: italic; }
+
+  /* ── Planning rows ── */
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .planning-grid { display: flex; flex-direction: column; gap: 8px; }
+
+  .planning-row {
+    display: grid;
+    /* Always 3 cols — badge stays visible on all sizes */
+    grid-template-columns: 100px 1fr max-content;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border-radius: var(--r-sm);
+    border: 1.5px solid transparent;
+    transition: border-color .15s;
+    animation: fadeUp .35s cubic-bezier(.16,1,.3,1) both;
+  }
+
+  /* Colour + PATTERN differentiation (not hue-only) */
+  .planning-row.type-toets {
+    background: var(--amber-light);
+    border-color: var(--amber-border);
+  }
+
+  .planning-row.type-voorkeur {
+    background: var(--blue-light);
+    border-color: var(--blue-border);
+  }
+
+  .planning-row.type-huiswerk {
+    background: var(--green-light);
+    border-color: #A7D4A3;
+  }
+
+  .planning-row.type-vrij {
+    background: var(--neutral-light);
+    border-color: var(--border);
+  }
+
+  .p-day {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-sub);
+    text-transform: uppercase;
+    letter-spacing: .06em;
+  }
+
+  .p-vak {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .p-vak.leeg { color: var(--text-muted); font-style: italic; font-weight: 400; font-size: 14px; }
+
+  /* Badges — shape + icon + colour for colourblind users */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    border-radius: 4px;           /* square-ish, not pill, for distinction */
+    padding: 3px 8px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .04em;
+    white-space: nowrap;
+    border: 1.5px solid transparent;
+  }
+
+  .badge-toets    { background: var(--amber-light); border-color: var(--amber-border); color: var(--amber-text); }
+  .badge-huiswerk { background: var(--green-light);  border-color: #A7D4A3;            color: var(--green-text); }
+  .badge-voorkeur { background: var(--blue-light);   border-color: var(--blue-border); color: var(--blue-text); }
+  .badge-vrij     { background: var(--neutral-light);border-color: var(--border);      color: var(--neutral-text); }
+
+  /* ── Animations — single, intentional, respects prefers-reduced-motion ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Footer ── */
+  .site-footer {
+    margin-top: 64px;
+    padding: 24px 0 40px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+  }
+
+  .footer-credit {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  .footer-credit strong {
+    color: var(--text-sub);
+    font-weight: 600;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 520px) {
+    body { padding: 40px 16px 100px; }
+    .card { padding: 24px 18px; }
+    .result-card { padding: 22px 18px; }
+    .actions { flex-direction: column; }
+
+    /* Keep 3 cols on mobile but abbreviate day */
+    .planning-row { grid-template-columns: 36px 1fr max-content; gap: 10px; }
+    .p-day { font-size: 12px; letter-spacing: 0; }
+    .p-vak { font-size: 14px; }
+  }
+</style>
+</head>
+<body>
+<div class="page-wrapper">
+
+  <header>
+    <div class="school-label">Daltonuur</div>
+    <h1>Jouw <em>aanmelding</em><br>voor deze week</h1>
+    <p>Geef aan welke vakken je hebt — het algoritme verdeelt automatisch je daltonuren over de week.</p>
+  </header>
+
+  <!-- Card 1: primary visual weight -->
+  <div class="card card-1" role="group" aria-labelledby="label-hw">
+    <div class="card-header">
+      <div class="step-num" aria-hidden="true">1</div>
+      <div class="card-titles">
+        <h2 id="label-hw">Huiswerk komende twee weken</h2>
+        <p class="hint">Selecteer alle vakken waarvoor je huiswerk hebt</p>
+      </div>
+    </div>
+    <div class="pill-wrap" id="wrap-huiswerk">
+      <div class="pills" id="pills-huiswerk" role="group" aria-label="Vakken met huiswerk"></div>
+      <p class="empty-hint">Nog niets geselecteerd — kies minimaal één vak.</p>
+    </div>
+  </div>
+
+  <!-- Card 2: secondary -->
+  <div class="card card-2" role="group" aria-labelledby="label-toets">
+    <div class="card-header">
+      <div class="step-num" aria-hidden="true">2</div>
+      <div class="card-titles">
+        <h2 id="label-toets">Toetsen komende twee weken</h2>
+        <p class="hint">Selecteer alle vakken waarvoor je een toets hebt</p>
+      </div>
+    </div>
+    <div class="pill-wrap" id="wrap-toets">
+      <div class="pills" id="pills-toets" role="group" aria-label="Vakken met toets"></div>
+      <p class="empty-hint">Nog niets geselecteerd.</p>
+    </div>
+  </div>
+
+  <!-- Card 3: tertiary / optional -->
+  <div class="card card-3" role="group" aria-labelledby="label-vk">
+    <div class="card-header">
+      <div class="step-num" aria-hidden="true">3</div>
+      <div class="card-titles">
+        <h2 id="label-vk">Voorkeur daltonuur <span style="font-family:DM Sans;font-size:13px;color:var(--text-muted);font-weight:400">(optioneel)</span></h2>
+        <p class="hint">Welk vak heeft jouw hoogste persoonlijke prioriteit?</p>
+      </div>
+    </div>
+    <div class="pill-wrap" id="wrap-voorkeur">
+      <div class="pills" id="pills-voorkeur" role="group" aria-label="Voorkeursvakken"></div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="btn-primary" onclick="submitForm()">Planning genereren →</button>
+    <button class="btn-reset" onclick="resetForm()">Opnieuw</button>
+  </div>
+
+  <!-- Result -->
+  <div id="result" aria-live="polite">
+
+    <div class="result-card">
+      <h3>Jouw selectie</h3>
+      <div class="result-group">
+        <div class="result-label">Huiswerk</div>
+        <div class="result-tags" id="res-huiswerk"></div>
+      </div>
+      <div class="result-group">
+        <div class="result-label">Toetsen</div>
+        <div class="result-tags" id="res-toets"></div>
+      </div>
+      <div class="result-group">
+        <div class="result-label">Voorkeur</div>
+        <div class="result-tags" id="res-voorkeur"></div>
+      </div>
+    </div>
+
+    <div class="result-card" style="animation-delay:.08s">
+      <h3>Weekplanning daltonuur</h3>
+
+      <div class="legend" aria-label="Legenda prioriteit">
+        <span class="badge badge-toets">📝 Toets</span>
+        <span class="badge badge-voorkeur">⭐ Voorkeur</span>
+        <span class="badge badge-huiswerk">✏️ Huiswerk</span>
+        <span class="badge badge-vrij">○ Vrije studie</span>
+      </div>
+
+      <div class="planning-grid" id="planning-grid" role="list"></div>
+    </div>
+
+  </div><!-- /#result -->
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <p class="footer-credit">Gemaakt door <strong>Ray Achakzai</strong></p>
+  </footer>
+
+</div><!-- /.page-wrapper -->
+
+<script>
+  const vakken = [
+    'Nederlands','Engels','Duits','Frans',
+    'Wiskunde','Natuurkunde','Scheikunde','Biologie',
+    'Aardrijkskunde','Geschiedenis','Economie','M&O',
+    'Informatica','Kunst','Muziek','LO'
+  ];
+
+  const DAGEN = [
+    { long: 'Maandag',   short: 'Ma' },
+    { long: 'Dinsdag',   short: 'Di' },
+    { long: 'Woensdag',  short: 'Wo' },
+    { long: 'Donderdag', short: 'Do' },
+    { long: 'Vrijdag',   short: 'Vr' },
+  ];
+
+  // ── Algoritme ──────────────────────────────────────────────────────────────
+  // Scores: toets=10, voorkeur=5, huiswerk=3
+  // Spreiding: geen herhaling twee opeenvolgende dagen indien mogelijk
+  // Toetsvakken krijgen voorrang en worden vroeg ingepland
+  function maakPlanning(huiswerk, toetsen, voorkeur) {
+    const scores = {};
+    toetsen.forEach(v  => { scores[v] = (scores[v] || 0) + 10; });
+    voorkeur.forEach(v => { scores[v] = (scores[v] || 0) + 5;  });
+    huiswerk.forEach(v => { scores[v] = (scores[v] || 0) + 3;  });
+
+    let kandidaten = Object.entries(scores)
+      .filter(([, s]) => s > 0)
+      .sort((a, b) => b[1] - a[1])
+      .map(([v]) => v);
+
+    const planning = [];
+    const ingepland = {};
+    let vorigeVak = null;
+
+    for (let i = 0; i < 5; i++) {
+      if (!kandidaten.length) {
+        planning.push({ dag: DAGEN[i], vak: 'Vrije studie', type: 'vrij' });
+        vorigeVak = null;
+        continue;
+      }
+
+      const gekozen = kandidaten.find(v => v !== vorigeVak) || kandidaten[0];
+
+      let type = 'huiswerk';
+      if (toetsen.includes(gekozen))   type = 'toets';
+      else if (voorkeur.includes(gekozen)) type = 'voorkeur';
+
+      planning.push({ dag: DAGEN[i], vak: gekozen, type });
+      ingepland[gekozen] = (ingepland[gekozen] || 0) + 1;
+      vorigeVak = gekozen;
+
+      if (!toetsen.includes(gekozen) || ingepland[gekozen] >= 2) {
+        kandidaten = kandidaten.filter(v => v !== gekozen);
+        if ((5 - i - 1) > kandidaten.length) kandidaten.push(gekozen);
+      }
+    }
+    return planning;
+  }
+  // ───────────────────────────────────────────────────────────────────────────
+
+  function makePills(containerId) {
+    const el = document.getElementById(containerId);
+    vakken.forEach(v => {
+      const btn = document.createElement('button');
+      btn.className = 'pill';
+      btn.textContent = v;
+      btn.dataset.value = v;
+      btn.setAttribute('role', 'checkbox');
+      btn.setAttribute('aria-checked', 'false');
+      btn.onclick = () => {
+        btn.classList.toggle('selected');
+        btn.setAttribute('aria-checked', btn.classList.contains('selected') ? 'true' : 'false');
+      };
+      el.appendChild(btn);
+    });
+  }
+
+  function getSelected(id) {
+    return [...document.querySelectorAll(`#${id} .pill.selected`)].map(b => b.dataset.value);
+  }
+
+  function renderTags(id, items, cls) {
+    const el = document.getElementById(id);
+    el.innerHTML = items.length
+      ? items.map(v => `<span class="result-tag ${cls}">${v}</span>`).join('')
+      : '<span class="result-tag none">Geen opgegeven</span>';
+  }
+
+  const BADGE = {
+    toets:    '<span class="badge badge-toets">📝 Toets</span>',
+    voorkeur: '<span class="badge badge-voorkeur">⭐ Voorkeur</span>',
+    huiswerk: '<span class="badge badge-huiswerk">✏️ Huiswerk</span>',
+    vrij:     '<span class="badge badge-vrij">○ Vrij</span>',
+  };
+
+  function submitForm() {
+    const hw    = getSelected('pills-huiswerk');
+    const toets = getSelected('pills-toets');
+    const vk    = getSelected('pills-voorkeur');
+
+    // Show empty-state hint on card 1 if nothing selected
+    document.getElementById('wrap-huiswerk').classList.toggle('show-empty', hw.length === 0);
+
+    renderTags('res-huiswerk', hw, 'hw');
+    renderTags('res-toets',    toets, 'tts');
+    renderTags('res-voorkeur', vk, 'vk');
+
+    const planning = maakPlanning(hw, toets, vk);
+    const grid = document.getElementById('planning-grid');
+    grid.innerHTML = '';
+
+    planning.forEach((item, i) => {
+      const row = document.createElement('div');
+      row.className = `planning-row type-${item.type}`;
+      row.setAttribute('role', 'listitem');
+      row.style.animationDelay = `${i * .06}s`;
+
+      // Responsive day label: long on wide, short on narrow via CSS content trick
+      row.innerHTML = `
+        <div class="p-day">
+          <span class="day-long">${item.dag.long}</span>
+          <span class="day-short" aria-hidden="true">${item.dag.short}</span>
+        </div>
+        <div class="p-vak${item.vak === 'Vrije studie' ? ' leeg' : ''}">${item.vak}</div>
+        <div>${BADGE[item.type]}</div>
+      `;
+      grid.appendChild(row);
+    });
+
+    const result = document.getElementById('result');
+    result.style.display = 'block';
+    result.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function resetForm() {
+    document.querySelectorAll('.pill.selected').forEach(p => {
+      p.classList.remove('selected');
+      p.setAttribute('aria-checked', 'false');
+    });
+    document.querySelectorAll('.pill-wrap').forEach(w => w.classList.remove('show-empty'));
+    document.getElementById('result').style.display = 'none';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Responsive day label swap via JS (simpler than CSS content tricks)
+  function applyDayLabels() {
+    const narrow = window.innerWidth <= 520;
+    document.querySelectorAll('.day-long').forEach(el => el.style.display = narrow ? 'none' : '');
+    document.querySelectorAll('.day-short').forEach(el => el.style.display = narrow ? '' : 'none');
+  }
+  window.addEventListener('resize', applyDayLabels);
+
+  makePills('pills-huiswerk');
+  makePills('pills-toets');
+  makePills('pills-voorkeur');
+  applyDayLabels();
+</script>
+</body>
+</html>
