@@ -1,0 +1,16 @@
+{
+  "name": "dalton-vragenlijst",
+  "version": "1.0.0",
+  "description": "Daltonuur Aanmelding - Static HTML questionnaire",
+  "main": "index.html",
+  "scripts": {
+    "dev": "python3 -m http.server 8000",
+    "test": "echo \"No tests configured\" && exit 0"
+  },
+  "keywords": ["dalton", "questionnaire", "static"],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@vercel/analytics": "^1.4.1"
+  }
+}
