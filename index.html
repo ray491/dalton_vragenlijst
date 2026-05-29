@@ -63,7 +63,7 @@
     font-family: 'DM Sans', sans-serif;
     color: var(--text);
     min-height: 100vh;
-    padding: 56px 20px 120px;
+    padding: clamp(24px, 4vw, 56px) clamp(12px, 3vw, 20px) clamp(100px, 16vw, 120px);
     /* reduce motion: respect user pref */
   }
 
@@ -71,7 +71,7 @@
     *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
   }
 
-  .page-wrapper { max-width: 680px; margin: 0 auto; }
+  .page-wrapper { width: min(100%, 680px); margin: 0 auto; }
 
   /* ── Header ── */
   header {
@@ -102,7 +102,7 @@
     margin-top: 16px;
     font-size: 15px;
     color: var(--text-sub);
-    line-height: 0.25;
+    line-height: 1.5;
     max-width: 480px;
   }
 
@@ -212,6 +212,7 @@
     user-select: none;
     /* Accessibility */
     outline: none;
+    min-height: 36px;
   }
 
   .pill:hover {
@@ -347,7 +348,7 @@
   .planning-row {
     display: grid;
     /* Always 3 cols — badge stays visible on all sizes */
-    grid-template-columns: 100px 1fr max-content;
+    grid-template-columns: minmax(64px, 100px) minmax(0, 1fr) auto;
     align-items: center;
     gap: 12px;
     padding: 14px 16px;
@@ -390,6 +391,8 @@
     font-size: 15px;
     font-weight: 600;
     color: var(--text);
+    min-width: 0;
+    overflow-wrap: anywhere;
   }
 
   .p-vak.leeg { color: var(--text-muted); font-style: italic; font-weight: 400; font-size: 14px; }
@@ -412,6 +415,7 @@
   .badge-huiswerk { background: var(--green-light);  border-color: #A7D4A3;            color: var(--green-text); }
   .badge-voorkeur { background: var(--blue-light);   border-color: var(--blue-border); color: var(--blue-text); }
   .badge-vrij     { background: var(--neutral-light);border-color: var(--border);      color: var(--neutral-text); }
+  .day-short { display: none; }
 
   /* ── Animations — single, intentional, respects prefers-reduced-motion ── */
   @keyframes fadeUp {
@@ -438,16 +442,45 @@
   }
 
   /* ── Responsive ── */
+  @media (max-width: 860px) {
+    header { margin-bottom: 40px; }
+    .card { padding: 28px 24px; }
+    .result-card { padding: 24px; }
+  }
+
+  @media (max-width: 640px) {
+    .card-header { gap: 10px; margin-bottom: 14px; }
+    .card-titles h2 { font-size: 17px; }
+    .card-titles .hint { font-size: 12px; }
+    .btn-primary,
+    .btn-reset { width: 100%; }
+  }
   @media (max-width: 520px) {
-    body { padding: 40px 16px 100px; }
+    body { padding: 28px 12px 96px; }
     .card { padding: 24px 18px; }
     .result-card { padding: 22px 18px; }
     .actions { flex-direction: column; }
 
     /* Keep 3 cols on mobile but abbreviate day */
-    .planning-row { grid-template-columns: 36px 1fr max-content; gap: 10px; }
+    .planning-row { grid-template-columns: 36px minmax(0, 1fr) auto; gap: 8px; padding: 12px; }
     .p-day { font-size: 12px; letter-spacing: 0; }
     .p-vak { font-size: 14px; }
+    .badge { font-size: 10px; padding: 3px 6px; }
+    .day-long { display: none; }
+    .day-short { display: inline; }
+  }
+
+  @media (max-width: 360px) {
+    .card { padding: 18px 14px; }
+    .result-card { padding: 16px 14px; }
+    .pill { padding: 6px 10px; font-size: 12px; }
+    .step-num { width: 24px; height: 24px; font-size: 11px; }
+  }
+
+  #frame iframe {
+    width: min(720px, calc(100vw - 24px)) !important;
+    max-width: 100%;
+    height: auto;
   }
 </style>
 </head>
@@ -463,7 +496,7 @@
               <polygon points="456.851,0 245,212.564 33.149,0 0.708,32.337 212.669,245.004 0.708,457.678 33.149,490 245,277.443 456.851,490 489.292,457.678 277.331,245.004 489.292,32.337 "/>
             </svg>
           </label>
-          <div id="frame" style="width: 100%;margin: auto;position: relative; z-index: 99998;"><iframe data-aa=2439455 src=//acceptable.a-ads.com/2439455/?size=Adaptive style='border:0; padding:0; width:70%; height:auto; overflow:hidden; margin: auto'></iframe></div>
+          <div id="frame" style="width: 100%;margin: auto;position: relative; z-index: 99998;"><iframe data-aa=2439455 src=//acceptable.a-ads.com/2439455/?size=Adaptive style='border:0; padding:0; height:auto; overflow:hidden; margin: auto'></iframe></div>
         </div>
         <style>
       #aadsstickymppavapv:checked + div {
@@ -717,18 +750,10 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  // Responsive day label swap via JS (simpler than CSS content tricks)
-  function applyDayLabels() {
-    const narrow = window.innerWidth <= 520;
-    document.querySelectorAll('.day-long').forEach(el => el.style.display = narrow ? 'none' : '');
-    document.querySelectorAll('.day-short').forEach(el => el.style.display = narrow ? '' : 'none');
-  }
-  window.addEventListener('resize', applyDayLabels);
 
   makePills('pills-huiswerk');
   makePills('pills-toets');
   makePills('pills-voorkeur');
-  applyDayLabels();
 </script>
 </body>
 </html>
