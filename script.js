@@ -203,10 +203,44 @@ async function checkAdBlocker() {
     document.body.removeChild(dummy);
   }
 
-  // If adblocker is detected, politely request to disable it via a JS alert
+  // If adblocker is detected, politely request to disable it via a custom modal popup
   if (isBlocked) {
-    alert("Het lijkt erop dat u een adblocker gebruikt. Schakel deze alstublieft uit voor onze website, aangezien we onze hosting betalen met advertenties. Bedankt voor uw steun!");
+    showAdblockModal();
   }
+}
+
+function showAdblockModal() {
+  const backdrop = document.createElement('div');
+  backdrop.className = 'ab-backdrop';
+
+  const modal = document.createElement('div');
+  modal.className = 'ab-modal';
+
+  const gif = document.createElement('img');
+  gif.className = 'ab-gif';
+  gif.src = 'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExYjBoc2ltcnpqZmNzNTdka2JpYjk3OGZodG9zY215a2d3MXNka2RndSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Lz6971fkGSgCMOOncl/giphy.gif';
+  gif.alt = 'Adblocker gedetecteerd';
+
+  const text = document.createElement('p');
+  text.className = 'ab-text';
+  text.textContent = 'Het lijkt erop dat u een adblocker gebruikt. Schakel deze alstublieft uit voor onze website, aangezien we onze hosting betalen met advertenties. Bedankt voor uw steun!';
+
+  const btn = document.createElement('button');
+  btn.className = 'ab-close-btn';
+  btn.textContent = 'Ik begrijp het';
+  btn.onclick = () => {
+    backdrop.classList.remove('show');
+    setTimeout(() => backdrop.remove(), 300);
+  };
+
+  modal.appendChild(gif);
+  modal.appendChild(text);
+  modal.appendChild(btn);
+  backdrop.appendChild(modal);
+  document.body.appendChild(backdrop);
+
+  // Force a brief delay to trigger CSS entry transition
+  setTimeout(() => backdrop.classList.add('show'), 50);
 }
 
 // ── Initialisation ───────────────────────────────────────────────────────────

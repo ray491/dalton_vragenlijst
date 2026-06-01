@@ -567,3 +567,77 @@ footer a:hover, .site-footer a:hover {
 #aadsstickymppavapv:checked + div {
   display: none;
 }
+
+/* ── Adblocker Modal / Popup ── */
+.ab-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 100000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.ab-backdrop.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.ab-modal {
+  background: var(--hp-card);
+  border: 0.5px solid var(--hp-border);
+  border-radius: var(--radius-lg);
+  width: 90%;
+  max-width: 420px;
+  padding: var(--space-lg);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  text-align: center;
+  transform: scale(0.9);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-base);
+}
+
+.ab-backdrop.show .ab-modal {
+  transform: scale(1);
+}
+
+.ab-gif {
+  width: 100%;
+  max-height: 200px;
+  object-fit: contain;
+  border-radius: var(--radius-md);
+}
+
+.ab-text {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--hp-text-sec);
+  margin: 0;
+}
+
+.ab-close-btn {
+  background: var(--hp-blue);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 10px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+  align-self: center;
+}
+
+.ab-close-btn:hover {
+  background: var(--hp-hover);
+}
