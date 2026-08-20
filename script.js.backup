@@ -102,6 +102,7 @@ function renderTags(id, items, cls) {
 
 const BADGE = {
   toets:    '<span class="badge badge-toets">📝 Toets</span>',
+  voorkeur: '<span class="badge badge-voorkeur">⭐ Voorkeur</span>',
   huiswerk: '<span class="badge badge-huiswerk">✏️ Huiswerk</span>',
   vrij:     '<span class="badge badge-vrij">○ Vrij</span>',
 };
@@ -302,6 +303,12 @@ function createDaySelection() {
     
     container.appendChild(dayCard);
   });
+}
+
+  toets:    '<span class="badge badge-toets">📝 Toets</span>',
+  voorkeur: '<span class="badge badge-voorkeur">⭐ Voorkeur</span>',
+  huiswerk: '<span class="badge badge-huiswerk">✏️ Huiswerk</span>',
+  vrij:     '<span class="badge badge-vrij">○ Vrije studie</span>',
 };
 
 function resetForm() {
