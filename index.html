@@ -1,153 +1,316 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="nl" data-theme="auto">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="google-site-verification" content="ecESxhYFnh3veWypeuNKCk4L1cLHZddV8YxVACvgLSw" />  
-<link rel="icon" type="image/x-icon" href="images.ico">
-<title>SlimDalton</title>
-<script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
-<script>
-  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-</script>
-<script defer src="/_vercel/insights/script.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SlimDalton — Automatische planning en optimale verdeling van daltonuren voor scholieren.">
+  <meta name="google-site-verification" content="ecESxhYFnh3veWypeuNKCk4L1cLHZddV8YxVACvgLSw" />  
+  <link rel="icon" type="image/x-icon" href="images.ico">
+  <title>SlimDalton — Slimme Daltonplanning</title>
+  
+  <!-- Fonts: Inter fallback + SF Pro system font stack -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Analytics -->
+  <script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  </script>
+  <script defer src="/_vercel/insights/script.js"></script>
+  
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
   <!-- BEGIN AADS AD UNIT 2439455 -->
-
-<div style="position: absolute; z-index: 99999">
-      <input autocomplete="off" type="checkbox" id="aadsstickymppavapv" hidden />
-      <div style="padding-top: 0; padding-bottom: auto;">
-        <div style="width:100%;height:auto;position:fixed;text-align:center;font-size:0;bottom:0;left:0;right:0;margin:auto">
-          <label for="aadsstickymppavapv" style="top: 50%;transform: translateY(-50%);right:24px;; position: absolute;border-radius: 4px; background: rgba(248, 248, 249, 0.70); padding: 4px;z-index: 99999;cursor:pointer">
-            <svg fill="#000000" height="16px" width="16px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 490 490">
-              <polygon points="456.851,0 245,212.564 33.149,0 0.708,32.337 212.669,245.004 0.708,457.678 33.149,490 245,277.443 456.851,490 489.292,457.678 277.331,245.004 489.292,32.337 "/>
-            </svg>
-          </label>
-          <div id="frame" style="width: 100%;margin: auto;position: relative; z-index: 99998;"><iframe data-aa=2439455 src=//acceptable.a-ads.com/2439455/?size=Adaptive style='border:0; padding:0; height:auto; overflow:hidden; margin: auto'></iframe></div>
+  <div style="position: absolute; z-index: 99999">
+    <input autocomplete="off" type="checkbox" id="aadsstickymppavapv" hidden />
+    <div style="padding-top: 0; padding-bottom: auto;">
+      <div style="width:100%;height:auto;position:fixed;text-align:center;font-size:0;bottom:0;left:0;right:0;margin:auto">
+        <label for="aadsstickymppavapv" style="top: 50%;transform: translateY(-50%);right:24px; position: absolute;border-radius: 99px; background: rgba(248, 248, 249, 0.85); backdrop-filter: blur(10px); padding: 6px; z-index: 99999; cursor:pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.12)">
+          <svg fill="#000000" height="14px" width="14px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 490 490">
+            <polygon points="456.851,0 245,212.564 33.149,0 0.708,32.337 212.669,245.004 0.708,457.678 33.149,490 245,277.443 456.851,490 489.292,457.678 277.331,245.004 489.292,32.337 "/>
+          </svg>
+        </label>
+        <div id="frame" style="width: 100%;margin: auto;position: relative; z-index: 99998;">
+          <iframe data-aa=2439455 src="//acceptable.a-ads.com/2439455/?size=Adaptive" style='border:0; padding:0; height:auto; overflow:hidden; margin: auto'></iframe>
         </div>
-    </div></div>
+      </div>
+    </div>
+  </div>
+  <!-- END AADS AD UNIT 2439455 -->
 
-<!-- END AADS AD UNIT 2439455 -->
-<div class="page-wrapper">
+  <!-- Top Glass Navigation Bar -->
+  <header class="app-nav">
+    <div class="nav-content">
+      <div class="nav-brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+            <path d="M6 6h10"/>
+            <path d="M6 10h10"/>
+            <path d="M6 14h6"/>
+          </svg>
+        </div>
+        <span class="brand-title">SlimDalton</span>
+      </div>
 
-  <header>
-    <div class="school-label">SlimDalton</div>
-    <h1><em>SlimDalton</em><br>aanmelding voor deze week</h1>
-    <p>Geef aan welke vakken je hebt,</p>
-    <p>het algoritme verdeelt automatisch je daltonuren over de week.</p>
+      <div class="nav-controls">
+        <button id="theme-toggle" class="theme-btn" aria-label="Wissel thema" title="Licht / Donker thema">
+          <svg class="sun-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2"/>
+            <path d="M12 20v2"/>
+            <path d="m4.93 4.93 1.41 1.41"/>
+            <path d="m17.66 17.66 1.41 1.41"/>
+            <path d="M2 12h2"/>
+            <path d="M20 12h2"/>
+            <path d="m6.34 17.66-1.41 1.41"/>
+            <path d="m19.07 4.93-1.41 1.41"/>
+          </svg>
+          <svg class="moon-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
   </header>
 
-  <!-- Card 1: primary visual weight -->
-  <div class="card card-1" role="group" aria-labelledby="label-hw">
-    <div class="card-header">
-      <div class="step-num" aria-hidden="true">1</div>
-      <div class="card-titles">
-        <h2 id="label-hw">Huiswerk komende twee weken</h2>
-        <p class="hint">Selecteer alle vakken waarvoor je huiswerk hebt</p>
+  <main class="page-wrapper">
+    <!-- Hero Intro -->
+    <section class="hero-section">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        Slimme Rooster Assistent
       </div>
-    </div>
-    <div class="pill-wrap" id="wrap-huiswerk">
-      <div class="pills" id="pills-huiswerk" role="group" aria-label="Vakken met huiswerk"></div>
-      <p class="empty-hint">Nog niets geselecteerd — kies minimaal één vak.</p>
-    </div>
+      <h1 class="hero-title">Daltonplanning <span class="gradient-text">deze week</span></h1>
+      <p class="hero-description">
+        Kies op welke dagen je daltonuren hebt en geef je vakken op. Het algoritme verdeelt automatisch je studietijd op basis van prioriteit.
+      </p>
+    </section>
+
+    <form id="dalton-form" onsubmit="event.preventDefault(); submitForm();">
+      
+      <!-- STAP 1: Daltondagen Selectie -->
+      <section class="apple-card card-days" role="group" aria-labelledby="label-days">
+        <div class="card-header">
+          <div class="step-badge step-blue">1</div>
+          <div class="header-text">
+            <div class="header-top">
+              <h2 id="label-days">Kies je Daltondagen</h2>
+              <span class="count-chip" id="days-count-chip">5 geselecteerd</span>
+            </div>
+            <p class="card-hint">Op welke dagen heb je deze week een daltonuur ingeroosterd?</p>
+          </div>
+        </div>
+
+        <div class="days-section">
+          <!-- Quick Presets -->
+          <div class="presets-bar" aria-label="Snelle dagenselectie">
+            <span class="preset-label">Snelkeuze:</span>
+            <button type="button" class="preset-btn active" onclick="setDayPreset('all')">Alle dagen (Ma-Vr)</button>
+            <button type="button" class="preset-btn" onclick="setDayPreset('mwf')">Ma • Wo • Vr</button>
+            <button type="button" class="preset-btn" onclick="setDayPreset('tt')">Di • Do</button>
+          </div>
+
+          <!-- Day Cards Grid -->
+          <div class="days-grid" id="days-grid" role="group" aria-label="Selecteerbare daltondagen">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- STAP 2: Toetsen -->
+      <section class="apple-card card-toets" role="group" aria-labelledby="label-toets">
+        <div class="card-header">
+          <div class="step-badge step-orange">2</div>
+          <div class="header-text">
+            <div class="header-top">
+              <h2 id="label-toets">Toetsen & Presentaties</h2>
+              <span class="priority-tag orange">Hoge prioriteit</span>
+            </div>
+            <p class="card-hint">Selecteer alle vakken waarvoor je binnenkort een proefwerk of SO hebt.</p>
+          </div>
+        </div>
+
+        <div class="pill-wrap" id="wrap-toets">
+          <div class="pills pills-orange" id="pills-toets" role="group" aria-label="Vakken met toetsen"></div>
+          <div class="pill-footer">
+            <span class="selection-counter" id="count-toets">0 geselecteerd</span>
+            <button type="button" class="clear-step-btn" onclick="clearGroup('pills-toets')">Wis selectie</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- STAP 3: Huiswerk -->
+      <section class="apple-card card-huiswerk" role="group" aria-labelledby="label-hw">
+        <div class="card-header">
+          <div class="step-badge step-blue">3</div>
+          <div class="header-text">
+            <div class="header-top">
+              <h2 id="label-hw">Huiswerk & Opdrachten</h2>
+              <span class="priority-tag blue">Standaard</span>
+            </div>
+            <p class="card-hint">Selecteer alle vakken waarvoor je huiswerk of werkstukken moet maken.</p>
+          </div>
+        </div>
+
+        <div class="pill-wrap" id="wrap-huiswerk">
+          <div class="pills pills-blue" id="pills-huiswerk" role="group" aria-label="Vakken met huiswerk"></div>
+          <p class="empty-hint" id="empty-hw-hint">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Selecteer minimaal één vak (huiswerk of toets) om een planning te maken.
+          </p>
+          <div class="pill-footer">
+            <span class="selection-counter" id="count-huiswerk">0 geselecteerd</span>
+            <button type="button" class="clear-step-btn" onclick="clearGroup('pills-huiswerk')">Wis selectie</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- STAP 4: Voorkeur / Focusvak -->
+      <section class="apple-card card-voorkeur" role="group" aria-labelledby="label-vk">
+        <div class="card-header">
+          <div class="step-badge step-purple">4</div>
+          <div class="header-text">
+            <div class="header-top">
+              <h2 id="label-vk">Persoonlijk Focusvak</h2>
+              <span class="priority-tag purple">Optioneel</span>
+            </div>
+            <p class="card-hint">Welk vak heeft jouw persoonlijke voorkeur voor extra uitleg of verdieping?</p>
+          </div>
+        </div>
+
+        <div class="pill-wrap" id="wrap-voorkeur">
+          <div class="pills pills-purple" id="pills-voorkeur" role="group" aria-label="Voorkeursvakken"></div>
+          <div class="pill-footer">
+            <span class="selection-counter" id="count-voorkeur">0 geselecteerd</span>
+            <button type="button" class="clear-step-btn" onclick="clearGroup('pills-voorkeur')">Wis selectie</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Action Buttons -->
+      <div class="action-bar">
+        <button type="submit" class="btn-primary" id="btn-generate">
+          <span class="btn-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3L12 3Z"/>
+            </svg>
+          </span>
+          Planning genereren
+        </button>
+        <button type="button" class="btn-secondary" onclick="resetForm()">
+          <span class="btn-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+              <path d="M3 3v5h5"/>
+            </svg>
+          </span>
+          Herstel
+        </button>
+      </div>
+
+    </form>
+
+    <!-- Results Section -->
+    <section id="result" class="result-section" aria-live="polite">
+      
+      <!-- Result Card: Overview & Schedule -->
+      <div class="apple-card result-main-card">
+        
+        <div class="result-header-banner">
+          <div class="result-title-group">
+            <span class="result-kicker">Geoptimaliseerd Schema</span>
+            <h3 class="result-title">Jouw Weekplanning</h3>
+          </div>
+          <div class="result-actions-top">
+            <button class="icon-tool-btn" onclick="copyPlanningToClipboard()" title="Kopieer rooster naar klembord">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+              <span>Kopieer</span>
+            </button>
+            <button class="icon-tool-btn" onclick="window.print()" title="Afdrukken of opslaan als PDF">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg>
+              <span>Print</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Metric Rings / Quick Stats -->
+        <div class="stats-bar" id="stats-bar">
+          <div class="stat-pill">
+            <span class="stat-num" id="stat-days-count">0</span>
+            <span class="stat-desc">Daltondagen</span>
+          </div>
+          <div class="stat-pill">
+            <span class="stat-num" id="stat-tests-count">0</span>
+            <span class="stat-desc">Toetsen gedekt</span>
+          </div>
+          <div class="stat-pill">
+            <span class="stat-num" id="stat-hw-count">0</span>
+            <span class="stat-desc">Huiswerkvakken</span>
+          </div>
+        </div>
+
+        <!-- Legend -->
+        <div class="legend-bar" aria-label="Legenda">
+          <span class="legend-badge badge-toets"><span class="badge-dot-legend orange"></span> Toetsvoorbereiding</span>
+          <span class="legend-badge badge-voorkeur"><span class="badge-dot-legend purple"></span> Focusvak</span>
+          <span class="legend-badge badge-huiswerk"><span class="badge-dot-legend blue"></span> Huiswerk</span>
+          <span class="legend-badge badge-vrij"><span class="badge-dot-legend gray"></span> Vrije studie</span>
+        </div>
+
+        <!-- Weekly Planning List Grid -->
+        <div class="planning-timeline" id="planning-grid" role="list">
+          <!-- Rendered by JS -->
+        </div>
+
+        <!-- Summary overview of user selection -->
+        <div class="selection-summary">
+          <h4 class="summary-heading">Overzicht van jouw selectie</h4>
+          <div class="summary-grid">
+            <div class="summary-row">
+              <span class="summary-label">Daltondagen:</span>
+              <div class="summary-tags" id="res-dagen"></div>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label">Toetsen:</span>
+              <div class="summary-tags" id="res-toets"></div>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label">Huiswerk:</span>
+              <div class="summary-tags" id="res-huiswerk"></div>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label">Voorkeur:</span>
+              <div class="summary-tags" id="res-voorkeur"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- Apple-style Footer -->
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p class="footer-brand">SlimDalton</p>
+        <p class="footer-credit">Ontworpen &amp; ontwikkeld door <strong>Ray Achakzai</strong></p>
+        <p class="footer-note">Geoptimaliseerd voor alle scholen met Daltononderwijs.</p>
+      </div>
+    </footer>
+
+  </main>
+
+  <!-- Toast Notification (Copied to Clipboard) -->
+  <div id="toast" class="apple-toast" role="alert" aria-live="assertive">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+    <span id="toast-text">Planning gekopieerd naar klembord!</span>
   </div>
 
-  <!-- Card 2: secondary -->
-  <div class="card card-2" role="group" aria-labelledby="label-toets">
-    <div class="card-header">
-      <div class="step-num" aria-hidden="true">2</div>
-      <div class="card-titles">
-        <h2 id="label-toets">Toetsen komende twee weken</h2>
-        <p class="hint">Selecteer alle vakken waarvoor je een toets hebt</p>
-      </div>
-    </div>
-    <div class="pill-wrap" id="wrap-toets">
-      <div class="pills" id="pills-toets" role="group" aria-label="Vakken met toets"></div>
-      <p class="empty-hint">Nog niets geselecteerd.</p>
-    </div>
-  </div>
-
-  <!-- Card 3: tertiary / optional -->
-  <div class="card card-3" role="group" aria-labelledby="label-vk">
-    <div class="card-header">
-      <div class="step-num" aria-hidden="true">3</div>
-      <div class="card-titles">
-        <h2 id="label-vk">Voorkeur daltonuur <span style="font-family:DM Sans;font-size:13px;color:var(--text-muted);font-weight:400">(optioneel)</span></h2>
-        <p class="hint">Welk vak heeft jouw hoogste persoonlijke prioriteit?</p>
-      </div>
-    </div>
-    <div class="pill-wrap" id="wrap-voorkeur">
-      <div class="pills" id="pills-voorkeur" role="group" aria-label="Voorkeursvakken"></div>
-    </div>
-  </div>
-
-  <!-- Card 4: Days Selection -->
-  <div class="card card-4" role="group" aria-labelledby="label-days">
-    <div class="card-header">
-      <div class="step-num" aria-hidden="true">4</div>
-      <div class="card-titles">
-        <h2 id="label-days">Dagen voor Dalton's</h2>
-        <p class="hint">Selecteer de dagen waarop je Dalton's wilt hebben</p>
-      </div>
-    </div>
-    <div class="days-selection">
-      <div class="days-grid" id="days-grid"></div>
-    </div>
-  </div>
-
-  <div class="actions">
-    <button class="btn-primary" onclick="submitForm()">Planning genereren →</button>
-    <button class="btn-reset" onclick="resetForm()">Opnieuw</button>
-  </div>
-
-  <!-- Result -->
-  <div id="result" aria-live="polite">
-
-    <div class="result-card">
-      <h3>Jouw selectie</h3>
-      <div class="result-group">
-        <div class="result-label">Huiswerk</div>
-        <div class="result-tags" id="res-huiswerk"></div>
-      </div>
-      <div class="result-group">
-        <div class="result-label">Toetsen</div>
-        <div class="result-tags" id="res-toets"></div>
-      </div>
-      <div class="result-group">
-        <div class="result-label">Voorkeur</div>
-        <div class="result-tags" id="res-voorkeur"></div>
-      </div>
-      <div class="result-group">
-        <div class="result-label">Dalton Dagen</div>
-        <div class="result-tags" id="res-dagen"></div>
-      </div>
-    </div>
-
-    <div class="result-card" style="animation-delay:.08s">
-      <h3>Weekplanning daltonuur</h3>
-
-      <div class="legend" aria-label="Legenda prioriteit">
-        <span class="badge badge-toets">📝 Toets</span>
-        <span class="badge badge-voorkeur">⭐ Voorkeur</span>
-        <span class="badge badge-huiswerk">✏️ Huiswerk</span>
-        <span class="badge badge-vrij">○ Vrije studie</span>
-      </div>
-
-      <div class="planning-grid" id="planning-grid" role="list"></div>
-    </div>
-
-  </div><!-- /#result -->
-
-  <!-- Footer -->
-  <footer class="site-footer">
-    <p class="footer-credit">Gemaakt door <strong>Ray Achakzai</strong></p>
-  </footer>
-
-</div><!-- /.page-wrapper -->
-
-<script src="script.js" defer></script>
+  <script src="script.js" defer></script>
 </body>
 </html>
